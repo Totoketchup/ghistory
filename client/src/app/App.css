@@ -1,17 +1,31 @@
 .App {
   text-align: center;
   background-color: #0e1626;
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
   color: white;
+  background-size: cover;
+  overflow: hidden;
 }
 
+.GHistory-title {
+  margin: 40px 0px 40px 0px;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: 'Biryani', sans-serif;
+}
 
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.GHistory-footer {
+  position: relative;
+  padding: 20px 20px 20px 0px;
+  float: right;
+  font-size: 14px;
 }
 
 @keyframes App-logo-spin {
