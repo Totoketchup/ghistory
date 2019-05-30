@@ -10,7 +10,7 @@ passport.use(new GitHubStrategy({
     callbackURL: constants.BACKEND_ADDRESS+'/auth/github/callback'
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log('HEY');
+    console.log(accessToken, refreshToken, profile);
     return cb(null, profile);
   }));
 
@@ -21,8 +21,9 @@ router.get('/github', passport.authenticate('github'));
 
 router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
+    console.log('CALLBACK');
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect(constants.FRONTEND_ADDRESS);
   });
 
 module.exports = router;
