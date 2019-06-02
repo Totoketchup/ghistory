@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { finishAuth } from '../../shared/action';
 import querystring from 'querystring';
 import { Redirect } from 'react-router-dom';
+import Loading from '../widgets/loading';
 
-const Login = ({ dispatch, token, user }) => {
+const Login = ({ dispatch, accessToken, user }) => {
 
   const userInfo = querystring.parse(window.location.search.substr(1));
 
@@ -16,12 +17,10 @@ const Login = ({ dispatch, token, user }) => {
   return (
     <div className='App'>
       {
-        user !== undefined ? (
-          <span> TODO </span>
+        user !== undefined && accessToken !== undefined ? (
+          <Loading />
         ) : (
-          <Redirect
-            to={{ pathname: '/' }}
-          />
+          <Redirect to={{ pathname: '/' }} />
         )
       }
     </div>
@@ -32,7 +31,7 @@ const Login = ({ dispatch, token, user }) => {
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    token: state.token
+    accessToken: state.accessToken
   }
 }
 
