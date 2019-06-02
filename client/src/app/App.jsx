@@ -20,21 +20,22 @@ const App = ({ accessToken, user }) => {
         octoColor="grey"
         size={120}
       />
-      <button type="button" onClick={redirectToAuth}>
-        Authenticate
-      </button>
       {user !== undefined ? (
         <div>
           <div>The token is: {accessToken}</div>
           <Gravatar email={user.email} />
         </div>
-      ) : null}
+      ) : (
+        <button type="button" onClick={redirectToAuth}>
+          Authenticate
+        </button>
+      )}
       <footer>
         <div className="GHistory-footer">
-          Made with{' '}
+          Made with
           <span role="img" aria-label="sheep">
             ❤️
-          </span>{' '}
+          </span>
           by Anthony D&apos;Amato
         </div>
       </footer>
