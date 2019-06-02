@@ -1,42 +1,15 @@
-import fetch from 'isomorphic-fetch';
-
-export const REQUEST_AUTHENTICATION = 'REQUEST_AUTHENTICATION';
-export function requestAuthentication() {
+export const RECEIVE_AUTH = 'RECEIVE_AUTH';
+export function receiveAuthentication(user, accessToken) {
   return {
-    type: REQUEST_AUTHENTICATION
+    type: RECEIVE_AUTH,
+    user,
+    accessToken
   };
 }
 
-export const RECEIVE_AUTHENFICATION = 'RECEIVE_AUTHENFICATION';
-export function receiveAuthentication(token) {
-  return {
-    type: RECEIVE_AUTHENFICATION,
-    token: token
-  };
-}
-
-export function authenticate() {
+export function finishAuth(userInfo) {
   return (dispatch, getState) => {
-    dispatch(requestAuthentication());
-    console.log('ni');
-    fetch('/api/auth/github', { method: 'GET' })
-    .then((response) => {
-      if (response.status >= 400) {
-        return response.json()
-          .catch(() => {
-            throw new Error(`Error ${response.status} when , invalid json returned.`);
-          })
-          .then((json) => {
-            throw new Error(`Error ${response.status} when : ${json.message}`);
-          });
-      }
-      else {
-        return response.text();
-      }
-    })
-    .then((token) => Promise.resolve(dispatch(receiveAuthentication(token))))
-    .catch((error) => {
-      console.log(error);
-    });
+    const { user, accessToken } = userInfo;
+    dispatch(receiveAuthentication(JSON.parse(user), accessToken));
   };
 }

@@ -2,12 +2,12 @@ import React from 'react';
 import './App.css';
 import GithubCorner from 'react-github-corner';
 import { connect } from 'react-redux';
-import { authenticate } from '../shared/action';
+import Gravatar from 'react-gravatar';
 
-const App = ({ dispatch, token }) => {
-  const onClickAuthentificate = () => {
-    dispatch(authenticate())
-  };
+const App = ({ accessToken, dispatch, user }) => {
+  const redirectToAuth = () => {
+    window.location.href = 'http://localhost/api/auth/github';
+  }
 
   return (
     <div className='App'>
@@ -20,13 +20,22 @@ const App = ({ dispatch, token }) => {
         octoColor='grey'
         size={ 120 }
         />
-      <div>
-        The token is: { token }
-      </div>
-      <button
-        onClick={ onClickAuthentificate }>
-        Authentificate
+      <button  onClick={ redirectToAuth }>
+        Authenticate
       </button>
+      {
+        user !== undefined ? (
+          <div>
+            <div>
+              The token is: { accessToken }
+            </div>
+            <Gravatar email={ user.email } />
+          </div>
+
+        ) : (
+          null
+        )
+      }
       <footer>
         <div className='GHistory-footer'>
           Made with <span role='img' aria-label='sheep'>❤️</span> by Anthony D'Amato
@@ -39,7 +48,8 @@ const App = ({ dispatch, token }) => {
 
 const mapStateToProps = (state) => {
   return {
-    token: state.token
+    accessToken: state.accessToken,
+    user: state.user
   }
 }
 

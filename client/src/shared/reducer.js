@@ -1,16 +1,16 @@
-import { RECEIVE_AUTHENFICATION, REQUEST_AUTHENTICATION } from './action';
+import { RECEIVE_AUTH } from './action';
 
 const initialState = {
-  token: 'init tok'
+  token: '',
+  user: undefined
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case REQUEST_AUTHENTICATION:
-      return state;
-    case RECEIVE_AUTHENFICATION:
+    case RECEIVE_AUTH:
       return {
-        token: action.token
+        accessToken: action.accessToken,
+        user: action.user
       };
     default:
       return state;

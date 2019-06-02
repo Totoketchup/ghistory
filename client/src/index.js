@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app/App';
+import Login from './app/containers/login';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './shared/reducer';
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 const loggerMiddleware = createLogger()
 
@@ -20,7 +22,12 @@ const store = createStore(
 )
 const AppContainer = (
   <Provider store={ store }>
-    <App />
+    <BrowserRouter>
+      <Switch>
+        <Route path='/' exact={ true } component={ App } />
+        <Route path='/login' exact={ false } component={ Login } />
+      </Switch>
+    </BrowserRouter>
   </Provider>
 );
 
