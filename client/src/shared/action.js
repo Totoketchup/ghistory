@@ -1,14 +1,14 @@
 export const RECEIVE_AUTH = 'RECEIVE_AUTH';
 export function receiveAuthentication(user, accessToken) {
   return {
+    accessToken,
     type: RECEIVE_AUTH,
-    user,
-    accessToken
+    user
   };
 }
 
 export function finishAuth(userInfo) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const { user, accessToken } = userInfo;
     dispatch(receiveAuthentication(JSON.parse(user), accessToken));
   };

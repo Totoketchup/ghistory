@@ -5,7 +5,7 @@ const initialState = {
   user: undefined
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_AUTH:
       return {
@@ -15,4 +15,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-};
+}
