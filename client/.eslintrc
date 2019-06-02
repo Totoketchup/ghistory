@@ -30,6 +30,19 @@
             "error",
             "absolute-first"
         ],
+        "newline-per-chained-call": [
+            "error",
+            {
+                "ignoreChainWithDepth": 1
+            }
+        ],
+        "indent": [
+            "error",
+            2,
+            {
+                "MemberExpression": 0
+            }
+        ],
         "import/newline-after-import": "error",
         "eofline": true,
         "singleQuote": true

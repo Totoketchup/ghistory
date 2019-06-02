@@ -1,14 +1,26 @@
 import GithubCorner from 'react-github-corner';
 import Gravatar from 'react-gravatar';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { requestUser, userLogout } from '../shared/action';
 
 import './App.css';
 
-const App = ({ accessToken, user }) => {
+const App = ({ accessToken, dispatch, user }) => {
+  const [triedToResumeUser, setUserResumed] = useState(false);
+
+  if (user === undefined && !triedToResumeUser) {
+    dispatch(requestUser());
+    setUserResumed(true);
+  }
+
   const redirectToAuth = () => {
     window.location.href = 'http://localhost/api/auth/github';
+  };
+
+  const logout = () => {
+    dispatch(userLogout());
   };
 
   return (
@@ -24,6 +36,9 @@ const App = ({ accessToken, user }) => {
         <div>
           <div>The token is: {accessToken}</div>
           <Gravatar email={user.email} />
+          <button type="button" onClick={logout}>
+            Logout
+          </button>
         </div>
       ) : (
         <button type="button" onClick={redirectToAuth}>
@@ -50,6 +65,7 @@ App.defaultProps = {
 
 App.propTypes = {
   accessToken: PropTypes.string,
+  dispatch: PropTypes.func.isRequired,
   user: PropTypes.object
 };
 
