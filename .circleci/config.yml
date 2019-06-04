@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: Setup Front Dependencies
+          command: cd client && npm install
+      - run:
+          name: Build Front
+          command: cd client && NODE_ENV=production npm run build
+      - run:
+          name: Setup Back Dependencies
+          command: cd api && npm install
