@@ -1,9 +1,10 @@
 import localStorage from './localStorage';
+import createGithubClient from './github';
 
 export const RECEIVE_AUTH = 'RECEIVE_AUTH';
-export function receiveAuthentication(user, accessToken) {
+export function receiveAuthentication(user, client) {
   return {
-    accessToken,
+    client,
     type: RECEIVE_AUTH,
     user
   };
@@ -16,6 +17,22 @@ export function userLogout() {
     type: USER_LOGOUT
   };
 }
+
+export const GITHUB_CLIENT_CREATED = 'GITHUB_CLIENT_CREATED';
+export function githubClientCreated(client) {
+  return {
+    client,
+    type: GITHUB_CLIENT_CREATED,
+  };
+}
+
+export const GITHUB_CLIENT_ERROR = 'GITHUB_CLIENT_CREATED';
+export function githubClientError() {
+  return {
+    type: GITHUB_CLIENT_ERROR
+  };
+}
+
 export function requestUser() {
   return (dispatch) => {
     const resumedUser = localStorage.get();
@@ -35,8 +52,7 @@ export function requestUser() {
 export function finishAuth(userInfo) {
   return (dispatch) => {
     const { user, accessToken } = userInfo;
-
-    dispatch(receiveAuthentication(JSON.parse(user), accessToken));
+    dispatch(receiveAuthentication(JSON.parse(user), createGithubClient(accessToken)));
     localStorage.set(userInfo);
   };
 }

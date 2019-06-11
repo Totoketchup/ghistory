@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import { requestUser, userLogout } from '../shared/action';
 
 import './App.css';
+import List from './widgets/list';
 
-const App = ({ accessToken, dispatch, user }) => {
+const App = ({ accessToken, client, dispatch, user }) => {
   const [triedToResumeUser, setUserResumed] = useState(false);
 
   if (user === undefined && !triedToResumeUser) {
@@ -32,19 +33,22 @@ const App = ({ accessToken, dispatch, user }) => {
         octoColor="grey"
         size={120}
       />
-      {user !== undefined ? (
-        <div>
-          <div>The token is: {accessToken}</div>
-          <Gravatar email={user.email} />
-          <button type="button" onClick={logout}>
-            Logout
+      {
+        user !== undefined ? (
+          <div>
+            <div>The token is: {accessToken}</div>
+            <Gravatar email={user.email} />
+            <button type="button" onClick={logout}>
+              Logout
+            </button>
+            <List client= { client } />
+          </div>
+        ) : (
+          <button type="button" onClick={redirectToAuth}>
+            Authenticate
           </button>
-        </div>
-      ) : (
-        <button type="button" onClick={redirectToAuth}>
-          Authenticate
-        </button>
-      )}
+        )
+      }
       <footer>
         <div className="GHistory-footer">
           Made with
@@ -59,19 +63,19 @@ const App = ({ accessToken, dispatch, user }) => {
 };
 
 App.defaultProps = {
-  accessToken: '',
+  client: undefined,
   user: undefined
 };
 
 App.propTypes = {
-  accessToken: PropTypes.string,
+  client: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
   user: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
   return {
-    accessToken: state.accessToken,
+    client: state.client,
     user: state.user
   };
 };

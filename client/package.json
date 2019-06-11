@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@octokit/plugin-retry": "^2.2.0",
+    "@octokit/plugin-throttling": "^2.6.0",
+    "@octokit/rest": "^16.28.1",
     "http-proxy-middleware": "^0.19.1",
     "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.11",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
     "prop-types": "^15.7.2",
