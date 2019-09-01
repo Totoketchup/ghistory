@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 
 const List = ({ client }) => {
   const listRepos = client.getListOfRepos();
-  console.log(listRepos);
   return (
     <div>
-      { listRepos.map((repos) => <span key={ repos }> { repos } </span> ) }
+      Empty
     </div>
   )
+  // console.log(listRepos);
+  // return (
+  //   <div>
+  //     { listRepos.map((repos) => <span key={ repos }> { repos } </span> ) }
+  //   </div>
+  // )
 };
 
 List.propTypes = {

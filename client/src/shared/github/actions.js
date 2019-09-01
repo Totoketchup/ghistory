@@ -4,7 +4,6 @@ function getListOfRepos(client) {
 }
 
 export default function wrapGithubClient(client) {
-  console.log('CLIENT', client);
   return {
     getListOfRepos: () => getListOfRepos(client)
   }

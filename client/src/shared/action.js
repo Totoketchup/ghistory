@@ -2,9 +2,10 @@ import localStorage from './localStorage';
 import createGithubClient from './github';
 
 export const RECEIVE_AUTH = 'RECEIVE_AUTH';
-export function receiveAuthentication(user, client) {
+export function receiveAuthentication(user, token, client) {
   return {
     client,
+    token,
     type: RECEIVE_AUTH,
     user
   };
@@ -52,7 +53,7 @@ export function requestUser() {
 export function finishAuth(userInfo) {
   return (dispatch) => {
     const { user, accessToken } = userInfo;
-    dispatch(receiveAuthentication(JSON.parse(user), createGithubClient(accessToken)));
+    dispatch(receiveAuthentication(JSON.parse(user), accessToken, createGithubClient(accessToken)));
     localStorage.set(userInfo);
   };
 }

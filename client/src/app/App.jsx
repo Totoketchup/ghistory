@@ -8,7 +8,8 @@ import { requestUser, userLogout } from '../shared/action';
 import './App.css';
 import List from './widgets/list';
 
-const App = ({ accessToken, client, dispatch, user }) => {
+const App = ({ client, dispatch, user, token }) => {
+  console.log({ token, client, user });
   const [triedToResumeUser, setUserResumed] = useState(false);
 
   if (user === undefined && !triedToResumeUser) {
@@ -36,7 +37,7 @@ const App = ({ accessToken, client, dispatch, user }) => {
       {
         user !== undefined ? (
           <div>
-            <div>The token is: {accessToken}</div>
+            <div>The token is: {token}</div>
             <Gravatar email={user.email} />
             <button type="button" onClick={logout}>
               Logout
@@ -64,18 +65,21 @@ const App = ({ accessToken, client, dispatch, user }) => {
 
 App.defaultProps = {
   client: undefined,
+  token: undefined,
   user: undefined
 };
 
 App.propTypes = {
   client: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
+  token: PropTypes.string,
   user: PropTypes.object
 };
 
 const mapStateToProps = (state) => {
   return {
     client: state.client,
+    token: state.token,
     user: state.user
   };
 };
