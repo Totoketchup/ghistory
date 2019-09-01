@@ -1,7 +1,9 @@
-import { RECEIVE_AUTH, USER_LOGOUT } from './action';
+import { RECEIVE_AUTH, RECEIVE_RATE_LIMIT, USER_LOGOUT, RECEIVE_REPOS } from './action';
 
 const initialState = {
   client: undefined,
+  rateLimit: undefined,
+  repos: undefined,
   token: undefined,
   user: undefined
 };
@@ -16,6 +18,15 @@ export default function(state = initialState, action) {
     };
   case USER_LOGOUT:
     return initialState;
+  case RECEIVE_RATE_LIMIT:
+    return Object.assign({}, state, {
+      rateLimit: action.rateLimit
+    });
+  case RECEIVE_REPOS:
+    console.log(state);
+    return Object.assign({}, state, {
+      repos: action.repos
+    });
   default:
     return state;
   }

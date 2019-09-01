@@ -4,12 +4,11 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { requestUser, userLogout } from '../shared/action';
-
+import RateLimit from './widgets/rateLimit';
 import './App.css';
 import List from './widgets/list';
 
-const App = ({ client, dispatch, user, token }) => {
-  console.log({ token, client, user });
+const App = ({ client, dispatch, token, user }) => {
   const [triedToResumeUser, setUserResumed] = useState(false);
 
   if (user === undefined && !triedToResumeUser) {
@@ -35,14 +34,15 @@ const App = ({ client, dispatch, user, token }) => {
         size={120}
       />
       {
-        user !== undefined ? (
+        user != null && client != null ? (
           <div>
-            <div>The token is: {token}</div>
-            <Gravatar email={user.email} />
+            <div>The token is: {token}</div><br />
+            <Gravatar email={user.email} /><br />
+            <RateLimit client={client} />
             <button type="button" onClick={logout}>
               Logout
             </button>
-            <List client= { client } />
+            <List client={client} />
           </div>
         ) : (
           <button type="button" onClick={redirectToAuth}>
@@ -76,12 +76,6 @@ App.propTypes = {
   user: PropTypes.object
 };
 
-const mapStateToProps = (state) => {
-  return {
-    client: state.client,
-    token: state.token,
-    user: state.user
-  };
-};
+const mapStateToProps = (state) => state;
 
 export default connect(mapStateToProps)(App);
